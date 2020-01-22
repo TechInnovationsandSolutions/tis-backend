@@ -16,7 +16,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => 'success',
             'code' => 200,
-            'message' => 'Product created',
+            'message' => 'Products found',
             'data' => new ProductCollection(Product::with('category')->paginate(10)),
         ], 200);
     }
@@ -60,7 +60,7 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function update(Product $product, Request $request)
+    public function update(Product $product, ProductRequest $request)
     {
         $product->update($request->all());
         return response()->json([
@@ -84,7 +84,7 @@ class ProductController extends Controller
             'status' => 'success',
             'code' => 200,
             'message' => 'Product deleted',
-            'data' => new ResourcesProduct($product),
+
         ], 200);
     }
 }
