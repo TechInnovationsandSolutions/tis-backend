@@ -23,6 +23,9 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 // Route::group(['middleware' => 'auth:api'], function () {
+Route::get('/', function () {
+    return 'API Live';
+});
 Route::get('products', 'ProductController@index');
 Route::get('products/{product}', 'ProductController@show');
 
@@ -57,6 +60,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('address', 'OrderAddressController@store');
     Route::put('address/{id}', 'OrderAddressController@update');
     Route::delete('address/{id}', 'OrderAddressController@destroy');
+
+    Route::get('orders-all', 'OrderController@all');
+    Route::get('orders', 'OrderController@index');
+    Route::post('orders', 'OrderController@store');
+    Route::get('orders/{id}', 'OrderController@show');
+    Route::put('orders/{id}', 'OrderController@update');
+    Route::delete('orders/{id}', 'OrderController@destroy');
 
     Route::put('products/{product}', 'ProductController@update');
     Route::delete('products/{product}', 'ProductController@destroy');

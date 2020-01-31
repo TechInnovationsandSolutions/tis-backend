@@ -20,6 +20,7 @@ class CreateRatingsTable extends Migration
             $table->integer('rate');
             $table->text('comment');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('product_id')->references('id')->on('products')
                 ->onUpdate('cascade')->onDelete('cascade');
