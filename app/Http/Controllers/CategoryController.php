@@ -101,12 +101,12 @@ class CategoryController extends Controller
 
     public function products($id)
     {
-        Product::where('category_id', $id)->get();
+        $products = Product::with('category')->where('category_id', $id)->paginate(10);
         return response()->json([
             'status' => 'success',
             'code' => 200,
             'message' => 'Products found',
-            'data' => new ProductCollection(Product::with('category')->paginate(10)),
+            'data' => new ProductCollection($products),
         ], 200);
     }
 }
