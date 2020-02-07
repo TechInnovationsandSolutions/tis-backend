@@ -24,8 +24,8 @@ class Product extends JsonResource
             'reduced_cost' => ($this->cost) - ($this->discount / 100 * $this->cost),
             'discount' => $this->discount . '%',
             'images' => $this->pictures,
-            'ratings' => Rating::collection($this->ratings)
-            // 'images' => json_decode($this->images)
+            'ratings' => Rating::collection($this->ratings),
+            'images' => json_decode($this->images)
         ];
     }
 }
