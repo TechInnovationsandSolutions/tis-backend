@@ -23,6 +23,9 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 // Route::group(['middleware' => 'auth:api'], function () {
+Route::get('/', function () {
+    return 'API Live';
+});
 Route::get('products', 'ProductController@index');
 Route::get('products/{product}', 'ProductController@show');
 
@@ -35,17 +38,30 @@ Route::put('ratings/{id}', 'RatingController@update');
 
 
 Route::get('categories', 'CategoryController@index');
-Route::post('categories', 'CategoryController@store');
 Route::get('categories/{id}', 'CategoryController@show');
-Route::put('categories/{id}', 'CategoryController@update');
-Route::delete('categories/{id}', 'CategoryController@destroy');
+Route::get('categories/{id}/products', 'CategoryController@products');
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => ['auth:api', 'admin']], function () {
+    Route::post('categories', 'CategoryController@store');
+    Route::put('categories/{id}', 'CategoryController@update');
+    Route::delete('categories/{id}', 'CategoryController@destroy');
+    //user admin routes
+    Route::delete('users/{id}', 'UserController@destroy');
     Route::get('users', 'UserController@index');
+    //product admin routes
+
+    Route::put('products/{product}', 'ProductController@update');
+    Route::delete('products/{product}', 'ProductController@destroy');
+    Route::post('products', 'ProductController@store');
+
+    Route::delete('ratings/{id}', 'RatingController@destroy');
+});
+Route::group(['middleware' => 'auth:api'], function () {
+
     Route::post('users', 'UserController@store');
     Route::get('users/{id}', 'UserController@show');
     Route::put('users/{id}', 'UserController@update');
-    Route::delete('users/{id}', 'UserController@destroy');
+
 
     Route::get('/cart', 'CartController@index');
     Route::post('/cart', 'CartController@store');
@@ -58,11 +74,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('address/{id}', 'OrderAddressController@update');
     Route::delete('address/{id}', 'OrderAddressController@destroy');
 
-    Route::put('products/{product}', 'ProductController@update');
-    Route::delete('products/{product}', 'ProductController@destroy');
-    Route::post('products', 'ProductController@store');
-
-    Route::delete('ratings/{id}', 'RatingController@destroy');
+    Route::get('orders-all', 'OrderController@all');
+    Route::get('orders', 'OrderController@index');
+    Route::post('orders', 'OrderController@store');
+    Route::get('orders/{id}', 'OrderController@show');
+    Route::put('orders/{id}', 'OrderController@update');
+    Route::delete('orders/{id}', 'OrderController@destroy');
 });
 
 // Route::get('/address-all', 'OrderAddressController@all');

@@ -20,6 +20,7 @@ class CreateCartsTable extends Migration
             $table->decimal('amount');
             $table->integer('quantity');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');

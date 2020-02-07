@@ -6,12 +6,15 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product as ResourcesProduct;
 use App\Http\Resources\ProductCollection;
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class ProductController extends Controller
 {
     public function index()
     {
+
         //return ResourcesProduct::collection(Product::with('category')->paginate(10));
         return response()->json([
             'status' => 'success',
