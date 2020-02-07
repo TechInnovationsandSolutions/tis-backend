@@ -16,7 +16,7 @@ class Category extends JsonResource
     {
         return [
             'name' => $this->name,
-            'image' => url('storage/categories/' . $this->image)
+            'image' => $this->image
         ];
     }
 }

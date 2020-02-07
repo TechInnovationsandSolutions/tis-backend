@@ -26,7 +26,7 @@ class Product extends Model
     {
         if ($this->images) {
             foreach (json_decode($this->images) as $picture) {
-                $pictures[] = url('storage/products/' . $picture);
+                $pictures[] = $picture;
             }
             return $pictures;
         }
