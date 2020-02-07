@@ -67,10 +67,7 @@
 </head>
 
 <body>
-    @foreach($a as $item)
-    <p>{{$item}}</p>
-    @endforeach
-
+   
     <div class="flex-center position-ref full-height">
         @if (Route::has('login'))
         <div class="top-right links">
