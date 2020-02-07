@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\ProductCollection;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -23,17 +25,20 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'required|image'
+            'picture' => 'required|image'
         ]);
 
-        if ($image = $request->file()) {
+        if ($images = $request->file()) {
 
-            $imageName = $image->store('categories', 'public');
+            foreach ($images as $image) {
+                //dd($image);
+                $imageName = $image->store('categories', 'public');
 
-            $request->merge(['image' => $imageName]);
+                $request->merge(['image' => $imageName]);
+            }
         }
 
-        $category = Category::create($request->all());
+        $category = Category::create($request->except('picture'));
 
         return response()->json([
             'status' => 'success',
@@ -91,6 +96,17 @@ class CategoryController extends Controller
             'code' => 200,
             'message' => 'Product deleted',
 
+        ], 200);
+    }
+
+    public function products($id)
+    {
+        Product::where('category_id', $id)->get();
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'Products found',
+            'data' => new ProductCollection(Product::with('category')->paginate(10)),
         ], 200);
     }
 }
