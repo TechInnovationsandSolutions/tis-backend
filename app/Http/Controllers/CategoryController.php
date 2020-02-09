@@ -6,10 +6,15 @@ use App\Category;
 use App\Http\Resources\Category as CategoryResource;
 use App\Http\Resources\ProductCollection;
 use App\Product;
+use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     public function index()
     {
         //return ResourcesProduct::collection(Product::with('category')->paginate(10));
@@ -32,7 +37,8 @@ class CategoryController extends Controller
 
             foreach ($images as $image) {
                 //dd($image);
-                $imageName = $image->store('categories', 'public');
+                $image = $this->fileUploadService->uploadFile($image);
+                $imageName = $image['secure_url'] ?? null;
 
                 $request->merge(['image' => $imageName]);
             }
