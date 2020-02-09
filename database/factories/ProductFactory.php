@@ -9,7 +9,7 @@ $factory->define(Product::class, function (Faker $faker) {
 
     $images = array();
     for ($i = 1; $i <= rand(1, 4); $i++) {
-        $images[] = $faker->$faker->imageUrl(640, 480);
+        $images[] = $faker->imageUrl(640, 480);
     }
 
     return [

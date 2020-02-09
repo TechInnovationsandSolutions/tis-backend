@@ -6,12 +6,17 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product as ResourcesProduct;
 use App\Http\Resources\ProductCollection;
 use App\Product;
+use App\Services\FileUploadService;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class ProductController extends Controller
 {
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     public function index()
     {
 
@@ -36,7 +41,9 @@ class ProductController extends Controller
 
             foreach ($images as $image) {
                 //dd($image);
-                $imageName = $image->store('products', 'public');
+                $img = $this->fileUploadService->uploadFile($image);
+                $imageName = $img['secure_url'] ?? null;
+
                 $names[] = $imageName;
             }
 
