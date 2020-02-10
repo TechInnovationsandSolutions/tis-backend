@@ -27,6 +27,7 @@ class UserController extends Controller
             'email' => 'required',
             'phone' => 'nullable',
             'address' => 'nullable',
+            'password' => 'required|min:6|confirmed',
         ]);
 
         $user = User::create($request->all());
