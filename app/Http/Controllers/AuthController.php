@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\User as UserResource;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,5 +30,26 @@ class AuthController extends Controller
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'phone' => 'nullable',
+            'address' => 'nullable',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = User::create($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 201,
+            'message' => 'User created',
+            'data' => new UserResource($user),
+        ], 201);
     }
 }
