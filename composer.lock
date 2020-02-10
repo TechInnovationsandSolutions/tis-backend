@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe356093e158741adad729c6d7053b06",
+    "content-hash": "1ad544ad45a26affdb3de899251eeba7",
     "packages": [
         {
             "name": "cloudinary/cloudinary_php",
@@ -869,16 +869,16 @@
         },
         {
             "name": "jrm2k6/cloudder",
-            "version": "0.4.0",
+            "version": "0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jrm2k6/cloudder.git",
-                "reference": "82d75368890424d166bf025df39611a1d18abcc0"
+                "reference": "5838b7f5b885d6038a0ee5ea49e011528641248f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jrm2k6/cloudder/zipball/82d75368890424d166bf025df39611a1d18abcc0",
-                "reference": "82d75368890424d166bf025df39611a1d18abcc0",
+                "url": "https://api.github.com/repos/jrm2k6/cloudder/zipball/5838b7f5b885d6038a0ee5ea49e011528641248f",
+                "reference": "5838b7f5b885d6038a0ee5ea49e011528641248f",
                 "shasum": ""
             },
             "require": {
@@ -886,11 +886,14 @@
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "laravel/framework": ">=5.0",
+                "illuminate/support": ">=4.1.0",
                 "mockery/mockery": "0.9.*",
                 "phpunit/phpunit": "4.*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": []
+            },
             "autoload": {
                 "psr-0": {
                     "JD\\Cloudder": "src/"
@@ -916,7 +919,7 @@
                 "laravel4",
                 "upload"
             ],
-            "time": "2017-02-03T19:10:37+00:00"
+            "time": "2015-05-31T17:35:23+00:00"
         },
         {
             "name": "laravel/framework",
