@@ -22,6 +22,10 @@ class Product extends Model
         return $this->hasMany(Rating::class);
     }
 
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
     public function getPicturesAttribute()
     {
         if ($this->images) {

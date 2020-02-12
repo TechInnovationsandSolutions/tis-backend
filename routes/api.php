@@ -20,6 +20,12 @@ Route::middleware('auth:api')->get('/user', function () {
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('update', 'AuthController@update');
+        Route::get('show', 'AuthController@show');
+    });
 });
 
 // Route::group(['middleware' => 'auth:api'], function () {

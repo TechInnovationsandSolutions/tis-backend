@@ -34,21 +34,50 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+
+        $user = User::create($request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
             'phone' => 'nullable',
             'address' => 'nullable',
             'password' => 'required|min:6|confirmed',
-        ]);
-
-        $user = User::create($request->all());
+        ]));
 
         return response()->json([
             'status' => 'success',
             'code' => 201,
-            'message' => 'User created',
+            'message' => 'Account Created Successfully',
+            'data' => new UserResource($user),
+        ], 201);
+    }
+
+    public function update(Request $request)
+    {
+        $user = auth()->user();
+        $user->update($request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]));
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 201,
+            'message' => 'Account Updated Successfully',
+            'data' => new UserResource($user),
+        ], 201);
+    }
+
+    public function show()
+    {
+        $user = auth()->user();
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'Account Details',
             'data' => new UserResource($user),
         ], 201);
     }
