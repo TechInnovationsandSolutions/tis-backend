@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product as ResourcesProduct;
 use App\Http\Resources\ProductCollection;
+use App\Http\Resources\Tag;
 use App\Product;
 use App\Services\FileUploadService;
+use App\Tag as AppTag;
 use App\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
+
 
 class ProductController extends Controller
 {
@@ -25,7 +27,7 @@ class ProductController extends Controller
             'status' => 'success',
             'code' => 200,
             'message' => 'Products found',
-            'data' => new ProductCollection(Product::with('category')->paginate(10)),
+            'data' => new ProductCollection(Product::with('category', 'images', 'tags')->paginate(20)),
         ], 200);
     }
 
@@ -62,6 +64,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        // dd($product->images());
         return response()->json([
             'status' => 'success',
             'code' => 200,
@@ -96,5 +99,37 @@ class ProductController extends Controller
             'message' => 'Product deleted',
 
         ], 200);
+    }
+
+    public function search(Request $request)
+    {
+        $products = Product::with('category', 'images', 'tags')->where('name', 'LIKE', '%' . $request->search . '%')->paginate(20);
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'Products found',
+            'data' => new ProductCollection($products),
+        ], 200);
+    }
+
+    public function findByTag(Request $request)
+    {
+        $tag = AppTag::where('name', $request->tag)->first();
+
+        if ($tag) {
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'message' => $tag ? 'Products found' : 'no products found',
+            'data' => $tag ? new ProductCollection($tag->products->paginate(15)) : '',
+        ], 200);
+    }
+
+    public function test()
+    {
+        dd('hi');
     }
 }

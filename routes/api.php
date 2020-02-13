@@ -33,7 +33,10 @@ Route::get('/', function () {
     return 'API Live';
 });
 Route::get('products', 'ProductController@index');
+Route::get('products/search', 'ProductController@search');
+Route::get('products/tags', 'ProductController@findByTag');
 Route::get('products/{product}', 'ProductController@show');
+
 
 // });
 

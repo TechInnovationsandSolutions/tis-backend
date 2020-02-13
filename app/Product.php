@@ -9,9 +9,6 @@ class Product extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'images' => 'array',
-    ];
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -24,17 +21,11 @@ class Product extends Model
 
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
-    public function getPicturesAttribute()
-    {
-        if ($this->images) {
-            foreach (json_decode($this->images) as $picture) {
-                $pictures[] = $picture;
-            }
-            return $pictures;
-        }
 
-        return null;
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }
