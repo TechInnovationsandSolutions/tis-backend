@@ -16,6 +16,7 @@
         "laravel/passport": "^8.1",
         "laravel/tinker": "^2.0",
         "spatie/laravel-permission": "^3.6",
+        "spatie/laravel-tags": "^2.5",
         "unicodeveloper/laravel-paystack": "^1.0"
     },
     "require-dev": {

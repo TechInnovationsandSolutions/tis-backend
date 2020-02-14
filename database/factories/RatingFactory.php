@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Rating::class, function (Faker $faker) {
     return [
-        'product_id' => factory('App\Product'),
+        'product_id' => $faker->numberBetween(1, 10),
         'name' => $faker->name(),
         'rate' => $faker->numberBetween(1, 5),
         'comment' => $faker->paragraph,

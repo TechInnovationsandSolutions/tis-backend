@@ -20,6 +20,12 @@ Route::middleware('auth:api')->get('/user', function () {
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('update', 'AuthController@update');
+        Route::get('show', 'AuthController@show');
+    });
 });
 
 // Route::group(['middleware' => 'auth:api'], function () {
@@ -27,7 +33,10 @@ Route::get('/', function () {
     return 'API Live';
 });
 Route::get('products', 'ProductController@index');
+Route::get('products/search', 'ProductController@search');
+Route::get('products/tags', 'ProductController@findByTag');
 Route::get('products/{product}', 'ProductController@show');
+
 
 // });
 
