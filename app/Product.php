@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use \Spatie\Tags\HasTags;
 
     protected $guarded = ['id'];
 
@@ -17,11 +18,6 @@ class Product extends Model
     public function ratings()
     {
         return $this->hasMany(Rating::class);
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
     }
 
     public function images()

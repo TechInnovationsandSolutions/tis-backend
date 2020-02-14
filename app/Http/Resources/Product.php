@@ -25,7 +25,7 @@ class Product extends JsonResource
             'discount' => $this->discount . '%',
             'ratings' => Rating::collection($this->ratings),
             'images' => ProductImage::collection($this->images),
-            'tags' => Tag::collection($this->tags)
+            //'tags' => Tag::collection($this->tags)
         ];
     }
 }

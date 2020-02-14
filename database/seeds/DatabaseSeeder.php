@@ -14,13 +14,14 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
 
         $users = factory(App\User::class, 10)->create();
+        $tags = factory(\Spatie\Tags\Tag::class, 10)->create();
         $prods = factory(App\Product::class, 20)->create();
         $rates = factory(App\Rating::class, 10)->create();
         $adds = factory(App\OrderAddress::class, 10)->create();
         $carts = factory(App\Cart::class, 10)->create();
-        $tags = factory(App\Tag::class, 10)->create();
+
         $pimages = factory(App\ProductImage::class, 10)->create();
-        $ptags = factory(App\ProductTag::class, 10)->create();
+
         // $ords = factory(App\Order::class, 10)->create();
     }
 }

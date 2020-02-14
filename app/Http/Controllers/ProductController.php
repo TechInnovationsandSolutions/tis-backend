@@ -54,6 +54,10 @@ class ProductController extends Controller
 
         $product = Product::create($request->except(['image']));
 
+        if ($request->has('tags') && $request->tags != '') {
+            $product->attachTag($request->tags);
+        }
+
         return response()->json([
             'status' => 'success',
             'code' => 201,
@@ -115,16 +119,13 @@ class ProductController extends Controller
 
     public function findByTag(Request $request)
     {
-        $tag = AppTag::where('name', $request->tag)->first();
-
-        if ($tag) {
-        }
+        $tag = Product::withAnyTags([$request->tag])->paginate(15);
 
         return response()->json([
             'status' => 'success',
             'code' => 200,
-            'message' => $tag ? 'Products found' : 'no products found',
-            'data' => $tag ? new ProductCollection($tag->products->paginate(15)) : '',
+            'message' => count($tag) ? 'Products found' : 'no products found',
+            'data' => count($tag) ? new ProductCollection($tag) : '',
         ], 200);
     }
 
