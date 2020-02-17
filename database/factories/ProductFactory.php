@@ -7,10 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
 
-    $images = array();
-    for ($i = 1; $i <= rand(1, 4); $i++) {
-        $images[] = $faker->imageUrl(640, 480);
-    }
+
 
     return [
         'name' => $faker->word,
@@ -20,6 +17,5 @@ $factory->define(Product::class, function (Faker $faker) {
         'cost' => $faker->numberBetween(500, 50000),
         'discount' => $faker->numberBetween(2, 15),
         'quantity' => $faker->numberBetween(5, 20),
-        'images' => json_encode($images)
     ];
 });

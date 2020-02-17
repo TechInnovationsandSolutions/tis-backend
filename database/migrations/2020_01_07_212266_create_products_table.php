@@ -20,7 +20,6 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->text('excerpts');
             $table->decimal('cost');
-            $table->text('images')->nullable();
             $table->integer('discount');
             $table->integer('quantity');
             $table->string('code')->nullable();

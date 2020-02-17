@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use \Spatie\Tags\HasTags;
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'images' => 'array',
-    ];
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -22,15 +20,8 @@ class Product extends Model
         return $this->hasMany(Rating::class);
     }
 
-    public function getPicturesAttribute()
+    public function images()
     {
-        if ($this->images) {
-            foreach (json_decode($this->images) as $picture) {
-                $pictures[] = $picture;
-            }
-            return $pictures;
-        }
-
-        return null;
+        return $this->hasMany(ProductImage::class);
     }
 }
