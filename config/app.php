@@ -168,7 +168,6 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         JD\Cloudder\CloudderServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
 
         /*
          * Application Service Providers...
