@@ -9,8 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "barryvdh/laravel-cors": "^1.0",
         "fideloper/proxy": "^4.0",
+        "fruitcake/laravel-cors": "^1.0",
         "fzaninotto/faker": "^1.4",
         "jrm2k6/cloudder": "^0.6.0",
         "laravel/framework": "^6.2",
