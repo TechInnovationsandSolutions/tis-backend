@@ -11,7 +11,7 @@ use App\Services\FileUploadService;
 use App\Tag as AppTag;
 use App\User;
 use Illuminate\Http\Request;
-
+use JD\Cloudder\Facades\Cloudder;
 
 class ProductController extends Controller
 {
@@ -43,16 +43,33 @@ class ProductController extends Controller
 
             foreach ($images as $image) {
                 //dd($image);
-                $img = $this->fileUploadService->uploadFile($image);
-                $imageName = $img['secure_url'] ?? null;
 
-                $names[] = $imageName;
+                $fileExtension = $image->getClientOriginalExtension();
+
+                // Form new file name
+                $fileName = uniqid(true) . '_' . time() . '.' . $fileExtension;
+
+                // Get temp path
+                $photo = $image->getRealPath();
+
+                // Upload image to Cloudinary
+                Cloudder::upload($photo, $fileName);
+
+                $img = Cloudder::getResult();
+
+                $imageUrl = $img['secure_url'] ?? null;
+                $imageName = $img['public_id'] ?? null;
+
+                $names[] = ['url' => $imageUrl, 'title' => $imageName];
             }
-
-            $request->merge(['images' => json_encode($names)]);
         }
 
         $product = Product::create($request->except(['image']));
+        // dd($names);
+        foreach ($names as $name) {
+            $product->images()->create($name);
+        }
+
 
         if ($request->has('tags') && $request->tags != '') {
             $product->attachTag($request->tags);
