@@ -64,6 +64,12 @@ Route::group(['middleware' => ['auth:api', 'admin']], function () {
     Route::post('products', 'ProductController@store');
 
     Route::delete('ratings/{id}', 'RatingController@destroy');
+
+    // Tags admin
+    Route::get('tags', 'TagController@index');
+    Route::post('tags', 'TagController@store');
+    Route::put('tags/{id}', 'TagController@update');
+    Route::delete('tags/{id}', 'TagController@destroy');
 });
 Route::group(['middleware' => 'auth:api'], function () {
 
