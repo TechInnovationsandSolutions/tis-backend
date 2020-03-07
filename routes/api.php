@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth:api', 'admin']], function () {
     Route::delete('categories/{id}', 'CategoryController@destroy');
     //user admin routes
     Route::delete('users/{id}', 'UserController@destroy');
+    Route::get('users/{id}/orders', 'OrderController@userOrders');
     Route::get('users', 'UserController@index');
     //product admin routes
 
@@ -65,9 +66,15 @@ Route::group(['middleware' => ['auth:api', 'admin']], function () {
 
     Route::delete('ratings/{id}', 'RatingController@destroy');
 
+    //orders admin
+    Route::get('orders-all', 'OrderController@all');
+    Route::put('orders/{id}', 'OrderController@update');
+    Route::delete('orders/{id}', 'OrderController@destroy');
+
     // Tags admin
     Route::get('tags', 'TagController@index');
     Route::post('tags', 'TagController@store');
+    Route::get('tags/{id}', 'TagController@show');
     Route::put('tags/{id}', 'TagController@update');
     Route::delete('tags/{id}', 'TagController@destroy');
 });
@@ -89,12 +96,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('address/{id}', 'OrderAddressController@update');
     Route::delete('address/{id}', 'OrderAddressController@destroy');
 
-    Route::get('orders-all', 'OrderController@all');
+
     Route::get('orders', 'OrderController@index');
     Route::post('orders', 'OrderController@store');
     Route::get('orders/{id}', 'OrderController@show');
-    Route::put('orders/{id}', 'OrderController@update');
-    Route::delete('orders/{id}', 'OrderController@destroy');
 });
 
 // Route::get('/address-all', 'OrderAddressController@all');

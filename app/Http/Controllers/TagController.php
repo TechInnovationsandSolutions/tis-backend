@@ -34,6 +34,17 @@ class TagController extends Controller
         ], 200);
     }
 
+    public function show(Tag $tag)
+    {
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'Tag found',
+            'data' => new ResourcesTag($tag),
+        ], 200);
+    }
+
+
     public function update(Request $request, Tag $tag)
     {
         $tag->name = $request->name;
