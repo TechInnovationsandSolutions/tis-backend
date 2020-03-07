@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\Http\Resources\Order as OrderResource;
 use App\Order;
+use App\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -146,6 +147,19 @@ class OrderController extends Controller
             'code' => 200,
             'message' => 'Order deleted',
 
+        ], 200);
+    }
+
+    public function userOrders(User $user)
+    {
+        $cart = $user()->order;
+        //return ResourcesProduct::collection(Product::with('category')->paginate(10));
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'User\'s Orders',
+            // 'data' => $cart,
+            'data' => OrderResource::collection($cart),
         ], 200);
     }
 }
