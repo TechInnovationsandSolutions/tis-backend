@@ -124,7 +124,10 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $products = Product::with('category', 'images', 'tags')->where('name', 'LIKE', '%' . $request->search . '%')->paginate(20);
+        $products = Product::with('category', 'images', 'tags')
+            ->where('name', 'LIKE', "%{$request->search}%")
+            ->orWhere('description', 'LIKE', "%{$request->search}%")
+            ->paginate(20);
 
         return response()->json([
             'status' => 'success',
