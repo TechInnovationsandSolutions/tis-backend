@@ -24,7 +24,7 @@ class OrderController extends Controller
     }
     public function index()
     {
-        $cart = auth()->user()->order;
+        $cart = auth()->user()->orders;
         //return ResourcesProduct::collection(Product::with('category')->paginate(10));
         return response()->json([
             'status' => 'success',
@@ -152,7 +152,7 @@ class OrderController extends Controller
 
     public function userOrders(User $user)
     {
-        $cart = $user()->order;
+        $cart = $user->orders;
         //return ResourcesProduct::collection(Product::with('category')->paginate(10));
         return response()->json([
             'status' => 'success',
