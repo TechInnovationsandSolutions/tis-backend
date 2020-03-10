@@ -12,6 +12,7 @@ use App\Tag as AppTag;
 use App\User;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -44,13 +45,14 @@ class ProductController extends Controller
             foreach ($images as $image) {
                 //dd($image);
 
-                $fileExtension = $image->getClientOriginalExtension();
+              $img = Image::make($image);
 
+                $fileExtension = $img->getClientOriginalExtension();
                 // Form new file name
                 $fileName = uniqid(true) . '_' . time() . '.' . $fileExtension;
 
                 // Get temp path
-                $photo = $image->getRealPath();
+                $photo = $img->getRealPath();
 
                 // Upload image to Cloudinary
                 Cloudder::upload($photo, $fileName);
