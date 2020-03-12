@@ -33,16 +33,9 @@ class CategoryController extends Controller
             'picture' => 'required|image'
         ]);
 
-        if ($images = $request->file()) {
 
-            foreach ($images as $image) {
-                //dd($image);
-                $image = $this->fileUploadService->uploadFile($image);
-                $imageName = $image['secure_url'] ?? null;
 
-                $request->merge(['image' => $imageName]);
-            }
-        }
+        $request->merge(['image' => $request->picture['url'], 'thumbnail' => $request->picture['thumbnail']]);
 
         $category = Category::create($request->except('picture'));
 
