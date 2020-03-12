@@ -35,40 +35,11 @@ class ProductController extends Controller
     {
         // dd($request->file('images'));
         // return response()->json($request->file());
-        $names = array();
-        if ($images = $request->file()) {
-            // dd($request->file('images'));
-
-            //dd($images);
-
-            foreach ($images as $image) {
-                //dd($image);
-
-                $fileExtension = $image->getClientOriginalExtension();
-
-                // Form new file name
-                $fileName = uniqid(true) . '_' . time() . '.' . $fileExtension;
-
-                // Get temp path
-                $photo = $image->getRealPath();
-
-                // Upload image to Cloudinary
-                Cloudder::upload($photo, $fileName);
-
-                $img = Cloudder::getResult();
-
-                $imageUrl = $img['secure_url'] ?? null;
-                $imageName = $img['public_id'] ?? null;
-
-                $names[] = ['url' => $imageUrl, 'title' => $imageName];
-            }
-        }
 
         $product = Product::create($request->except(['image']));
         // dd($names);
-        foreach ($names as $name) {
-            $product->images()->create($name);
-        }
+
+        $product->images()->create($request->image);
 
 
         if ($request->has('tags') && $request->tags != '') {
@@ -97,6 +68,11 @@ class ProductController extends Controller
     public function update(Product $product, ProductRequest $request)
     {
         $product->update($request->all());
+
+        if ($request->has('image')) {
+            $product->images()->update($request->image);
+        }
+
         return response()->json([
             'status' => 'success',
             'code' => 201,
