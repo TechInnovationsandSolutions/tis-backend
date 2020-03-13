@@ -30,7 +30,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'picture' => 'required|image'
+            'picture' => 'required'
         ]);
 
 
