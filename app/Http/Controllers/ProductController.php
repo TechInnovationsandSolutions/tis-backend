@@ -43,9 +43,9 @@ class ProductController extends Controller
         $product->images()->create($request->image);
 
 
-        if ($request->has('tags') && $request->tags != '') {
-            $product->attachTag($request->tags);
-        }
+//         if ($request->has('tags') && $request->tags != '') {
+//             $product->attachTag($request->tags);
+//         }
 
         return response()->json([
             'status' => 'success',
