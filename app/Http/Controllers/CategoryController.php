@@ -64,15 +64,12 @@ class CategoryController extends Controller
             'image' => 'nullable|image'
         ]);
 
-        if ($image = $request->file()) {
+        if ($request->has('picture')) {
 
-            $imageName = $image->store('categories', 'public');
-
-            $request->merge(['image' => $imageName]);
-        } else {
-            $request->merge(['image' => $id->image]);
+             $request->merge(['image' => $request->picture['url'], 'thumbnail' => $request->picture['thumbnail']]);
+           
         }
-        $id->update($request->all());
+        $id->update($request->except(['picture']));
         return response()->json([
             'status' => 'success',
             'code' => 201,
