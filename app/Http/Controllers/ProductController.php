@@ -43,9 +43,9 @@ class ProductController extends Controller
         $product->images()->create($request->image);
 
 
-        if ($request->has('tags') && $request->tags != '') {
-            $product->attachTag($request->tags);
-        }
+//         if ($request->has('tags') && $request->tags != '') {
+//             $product->attachTag($request->tags);
+//         }
 
         return response()->json([
             'status' => 'success',
@@ -68,7 +68,7 @@ class ProductController extends Controller
 
     public function update(Product $product, ProductRequest $request)
     {
-        $product->update($request->all());
+        $product->update($request->except('image'));
 
         if ($request->has('image')) {
             $product->images()->update($request->image);
