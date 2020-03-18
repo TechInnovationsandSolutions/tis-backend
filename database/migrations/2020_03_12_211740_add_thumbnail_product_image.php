@@ -13,7 +13,7 @@ class AddThumbnailProductImage extends Migration
      */
     public function up()
     {
-        Schema::table('pruduct_images', function (Blueprint $table) {
+        Schema::table('product_images', function (Blueprint $table) {
             $table->string('thumbnail')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddThumbnailProductImage extends Migration
      */
     public function down()
     {
-        Schema::table('pruduct_images', function (Blueprint $table) {
+        Schema::table('product_images', function (Blueprint $table) {
             //
         });
     }

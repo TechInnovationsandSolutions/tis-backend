@@ -38,7 +38,7 @@ class AuthController extends Controller
         $user = User::create($request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'phone' => 'nullable',
             'address' => 'nullable',
             'password' => 'required|min:6|confirmed',
@@ -58,7 +58,7 @@ class AuthController extends Controller
         $user->update($request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            //'email' => 'required',
             'phone' => 'required',
             'address' => 'required',
         ]));
