@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function () {
     return dd('hi');
 });
 
-Route::post('forgot/password', 'Auth\ForgotPasswordController')->name('forgot.password');
+Route::post('forgot/password', 'Auth\ForgotPasswordController')->name('password.reset');
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
