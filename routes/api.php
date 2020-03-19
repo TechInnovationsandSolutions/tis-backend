@@ -82,10 +82,11 @@ Route::group(['middleware' => ['auth:api', 'admin']], function () {
 });
 Route::group(['middleware' => 'auth:api'], function () {
 
+    Route::post('users/update-password', 'UserController@updatePassword');
     Route::post('users', 'UserController@store');
     Route::get('users/{id}', 'UserController@show');
     Route::put('users/{id}', 'UserController@update');
-    Route::post('users/update-password', 'UserController@updatePassword');
+    
 
 
     Route::get('/cart', 'CartController@index');
