@@ -26,6 +26,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('update', 'AuthController@update');
         Route::get('show', 'AuthController@show');
+         Route::post('update-password', 'UserController@updatePassword');
         
     });
 });
@@ -82,7 +83,7 @@ Route::group(['middleware' => ['auth:api', 'admin']], function () {
 });
 Route::group(['middleware' => 'auth:api'], function () {
 
-    Route::post('users/update-password', 'UserController@updatePassword');
+   
     Route::post('users', 'UserController@store');
     Route::get('users/{id}', 'UserController@show');
     Route::put('users/{id}', 'UserController@update');
