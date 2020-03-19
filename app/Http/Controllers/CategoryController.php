@@ -61,13 +61,13 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'nullable|image'
+            'picture' => 'nullable|image'
         ]);
+
 
         if ($request->has('picture')) {
 
              $request->merge(['image' => $request->picture['url'], 'thumbnail' => $request->picture['thumbnail']]);
-           
         }
         $id->update($request->except(['picture']));
         return response()->json([

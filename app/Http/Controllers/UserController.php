@@ -86,4 +86,16 @@ class UserController extends Controller
 
         ], 200);
     }
+
+    public function changePassword(Request $request)
+    {
+        $user = User::findOrFail(auth()->user()->id);
+        $user->update(['password' => bcrypt($request->password)]);
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'OK'
+        ]);
+    }
 }
