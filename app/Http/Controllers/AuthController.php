@@ -81,4 +81,9 @@ class AuthController extends Controller
             'data' => new UserResource($user),
         ], 201);
     }
+
+    public function passwordReset(Request $request)
+    {
+        
+    }
 }
