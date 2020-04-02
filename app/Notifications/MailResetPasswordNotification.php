@@ -12,6 +12,8 @@ class MailResetPasswordNotification extends Notification
     use Queueable;
     public $token;
 
+   public $token;
+
     /**
      * Create a new notification instance.
      *
@@ -19,7 +21,8 @@ class MailResetPasswordNotification extends Notification
      */
     
 
-    public function __construct($token)
+
+    public function __construct($token, $email)
     {
         $this->token = $token;
     }
