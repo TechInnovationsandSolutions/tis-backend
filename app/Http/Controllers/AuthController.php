@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\User as UserResource;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -84,6 +86,29 @@ class AuthController extends Controller
 
     public function passwordReset(Request $request)
     {
-        
+        if($pr = DB::table('password_resets')->where('token', $request->token)->first()){
+            if (Carbon::parse($pr->created_at)->addHour() > Carbon::now()) {
+                        return response()->json([
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Token valid',
+                    'data' => true,
+                ], 201);
+             }else{
+                    return response()->json([
+                    'status' => 'error',
+                    'code' => 401,
+                    'message' => 'Token Expired',
+                    'data' => false,
+                ], 201);
+             }
+    }else{
+        return response()->json([
+            'status' => 'error',
+            'code' => 401,
+            'message' => 'Invalid Token',
+            'data' => false,
+        ], 201);
+    }
     }
 }

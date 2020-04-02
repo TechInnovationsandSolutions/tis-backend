@@ -126,6 +126,29 @@ class ProductController extends Controller
         ], 200);
     }
 
+    public function canReview(Product $product)
+    {
+        $orders = auth()->user()->orders->where('products', 'LIKE', '"id:"'.$product->id);
+
+        if(count($orders)){
+                return response()->json([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Can review Product',
+                'data' => true,
+            ], 200);
+        }else{
+
+                return response()->json([
+            'status' => 'error',
+            'code' => 401,
+            'message' => 'Can not review product',
+            'data' => false,
+        ], 200);
+        }
+
+    }
+
     public function test()
     {
         dd('hi');
