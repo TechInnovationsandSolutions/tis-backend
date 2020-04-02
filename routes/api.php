@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function () {
 });
 
 Route::post('forgot/password', 'Auth\ForgotPasswordController')->name('password.reset');
-Route::get('forgot/password-token', 'Auth\ForgotPasswordController');
+Route::get('forgot/password-token', 'AuthController@passwordReset');
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
@@ -104,6 +104,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('orders', 'OrderController@index');
     Route::post('orders', 'OrderController@store');
     Route::get('orders/{id}', 'OrderController@show');
+
+    //review product
+    Route::get('products/{product}/review', 'ProductController@canReview');
 });
 
 // Route::get('/address-all', 'OrderAddressController@all');
