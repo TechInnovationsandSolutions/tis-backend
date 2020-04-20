@@ -126,6 +126,13 @@ class AuthController extends Controller
                     'message' => 'Token valid',
                     'data' => 'Password updated, you can now login',
                 ], 200);        
+        }else{
+            return response()->json([
+                    'status' => 'error',
+                    'code' => 404,
+                    'message' => 'User not found',
+                    'data' => 'Password cannot be changed, user does not exist',
+                ], 200);   
         }
     }
 }
