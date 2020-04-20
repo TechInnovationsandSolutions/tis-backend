@@ -43,7 +43,7 @@ class MailResetPasswordNotification extends Notification
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail( $notifiable ) {
-   $link = url( "https://sophiesbathandbody.com/user/forgot-password?token=" . $this->token."&email=".$this->email );
+   $link = url( "https://sophiesbathandbody.com/user/forgot-password?token=" . $this->token);
 
    return ( new MailMessage )
       //->view('reset.emailer')
