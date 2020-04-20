@@ -88,11 +88,12 @@ class AuthController extends Controller
     {
         if($pr = DB::table('password_resets')->where('token', $request->token)->first()){
             if (Carbon::parse($pr->created_at)->addHour() > Carbon::now()) {
+                $user = User::where('email', $pr->email)->first();
                         return response()->json([
                     'status' => 'success',
                     'code' => 200,
                     'message' => 'Token valid',
-                    'data' => true,
+                    'data' => new UserResource($user),
                 ], 201);
              }else{
                     return response()->json([
@@ -110,5 +111,21 @@ class AuthController extends Controller
             'data' => false,
         ], 201);
     }
+    }
+
+    public function passwordChange(Request $request)
+    {   
+        if($user = User::find($request->user_id)){
+            $user->update([
+                'password' => bcrypt($request->password)
+            ]);
+
+            return response()->json([
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Token valid',
+                    'data' => 'Password updated, you can now login',
+                ], 200);        
+        }
     }
 }
