@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\User as ResourcesUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -90,12 +91,21 @@ class UserController extends Controller
     public function changePassword(Request $request)
     {
         $user = User::findOrFail(auth()->user()->id);
-        $user->update(['password' => bcrypt($request->password)]);
+        if(Hash::check($request->old_password, $user->password)){
+                $user->update(['password' => bcrypt($request->password)]);
 
-        return response()->json([
-            'status' => 'success',
-            'code' => 200,
-            'message' => 'OK'
-        ]);
+            return response()->json([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Password changed'
+            ]);
+        }else{
+             return response()->json([
+                'status' => 'error',
+                'code' => 401,
+                'message' => 'Old Password incorrect'
+            ]);
+        }
+        
     }
 }
