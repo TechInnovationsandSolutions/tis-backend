@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -86,8 +87,8 @@ class AuthController extends Controller
 
     public function passwordReset(Request $request)
     {
-        if($pr = DB::table('password_resets')->where('token', $request->token)->first()){
-            if (Carbon::parse($pr->created_at)->addHour() > Carbon::now()) {
+        if($pr = DB::table('password_resets')->where('email', $request->email)->first()){
+            if (Carbon::parse($pr->created_at)->addHour() > Carbon::now() && Hash::check($request->token, $pr->token)) {
                 $user = User::where('email', $pr->email)->first();
                         return response()->json([
                     'status' => 'success',
@@ -109,7 +110,7 @@ class AuthController extends Controller
             'code' => 401,
             'message' => 'Invalid Token',
             'data' => false,
-        ], 201);
+        ], 401);
     }
     }
 
