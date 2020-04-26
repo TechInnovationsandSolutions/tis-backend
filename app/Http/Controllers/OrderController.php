@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\Http\Resources\Order as OrderResource;
 use App\Order;
+use App\OrderItem;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -51,20 +52,31 @@ class OrderController extends Controller
             $amount = 0;
             foreach ($cart as $item) {
                 $amount += $item->quantity * $item->amount;
-                $products[] = ['id' => $item->product_id, 'amount' => $item->amount, 'quantity' => $item->quantity];
+                //$products[] = ['id' => $item->product_id, 'amount' => $item->amount, 'quantity' => $item->quantity];
             }
 
             //dd($products);
 
             $order = auth()->user()->orders()->create(
                 [
-                    'products' => json_encode($products),
+                    'products' => 'none',
                     'address_id' => $request->address_id,
                     'amount' => $amount,
                     'quantity' => 0,
                     'status' => 0,
                 ]
             );
+
+             foreach ($cart as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item->product_id,
+                    'price' => $item->amount,
+                    'quantity' => $item->quantity,
+                ]);
+            }
+
+
 
             Cart::whereIn('id', $cart->pluck('id'))->delete();
         }
