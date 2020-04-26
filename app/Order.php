@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    use SoftDeletes;
+    
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
 
@@ -27,19 +30,10 @@ class Order extends Model
         return $this->belongsTo(OrderAddress::class);
     }
 
-    public function getProductsAttribute($products)
+    public function items()
     {
-        if ($products) {
-            foreach (json_decode($products) as $product) {
-                $p = Product::find($product->id);
-                $prod[] = [
-                    'name' => $p ? $p->name : '',
-                    'amount' => $product->amount, 'quantity' => $product->quantity
-                ];
-            }
-            return $prod;
-        }
-
-        return null;
+        return $this->hasMany(OrderItem::class);
     }
+
+   
 }
