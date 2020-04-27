@@ -12,9 +12,6 @@ class Order extends Model
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
 
-
-
-
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -28,6 +25,11 @@ class Order extends Model
     public function address()
     {
         return $this->belongsTo(OrderAddress::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(OrderPayment::class);
     }
 
     public function items()
