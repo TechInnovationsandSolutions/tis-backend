@@ -209,8 +209,8 @@ class OrderController extends Controller
 
             OrderPayment::create([
                 'order_id' => $order->id,
-                'access_code' => $result['access_code'],
-                'reference' => $result['reference'],
+                'access_code' => $result['data']['access_code'],
+                'reference' => $result['data']['reference'],
                 'amount' => $order->amount,
                 'paid' => false
             ]);
