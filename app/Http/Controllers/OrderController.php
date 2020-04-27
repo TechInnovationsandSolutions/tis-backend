@@ -212,7 +212,7 @@ class OrderController extends Controller
                 'access_code' => $result['data']['access_code'],
                 'reference' => $result['data']['reference'],
                 'amount' => $order->amount,
-                'paid' => false
+                'status' => false
             ]);
 
         }
