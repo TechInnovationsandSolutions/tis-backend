@@ -182,6 +182,7 @@ class OrderController extends Controller
     {
         $result = array();
         $timesammp=DATE("dmyHis");
+        $sk = env('PS_KEY', 'sk_test_ab2e717da001e28d0138f84822fbff6249b33ab3');
         //Set other parameters as keys in the $postdata array
         $postdata =  array('email' => $order->user->email, 'amount' => $order->amount,"reference" => $timesammp);
         $url = "https://api.paystack.co/transaction/initialize";
@@ -193,7 +194,7 @@ class OrderController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $headers = [
-        'Authorization: Bearer sk_test_ab2e717da001e28d0138f84822fbff6249b33ab3',
+        'Authorization: Bearer '.$sk,
         'Content-Type: application/json',
 
         ];
@@ -221,6 +222,7 @@ class OrderController extends Controller
     public function verifyPay(Request $request)
     {
             $result = array();
+            $sk = env('PS_KEY', 'sk_test_ab2e717da001e28d0138f84822fbff6249b33ab3');
         //The parameter after verify/ is the transaction reference to be verified
         $url = 'https://api.paystack.co/transaction/verify/'.$request->reference;
 
@@ -229,7 +231,7 @@ class OrderController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt(
         $ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer sk_test_ab2e717da001e28d0138f84822fbff6249b33ab3']
+            'Authorization: Bearer '.$sk]
         );
         $request = curl_exec($ch);
         curl_close($ch);
