@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderItem extends Model
 {
     use SoftDeletes;
-    public $guarded = ['id'];
+    protected $guarded = ['id'];
 
     public function product()
     {
