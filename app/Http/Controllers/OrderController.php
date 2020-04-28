@@ -258,7 +258,7 @@ class OrderController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'code' => 200,
-                    'message' => 'User\'s Order',
+                    'message' => 'Transaction was successful',
                     // 'data' => $cart,
                     'data' => new OrderResource($pay->order),
                 ], 200);
