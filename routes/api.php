@@ -76,6 +76,12 @@ Route::group(['middleware' => ['auth:api', 'admin']], function () {
     Route::put('orders/{id}', 'OrderController@update');
     Route::delete('orders/{id}', 'OrderController@destroy');
 
+    //orderspayments admin
+    Route::get('payments', 'OrderController@payments');
+    Route::put('payments/{id}', 'OrderController@payment');
+    Route::delete('payments/{id}', 'OrderController@destroyPayment');
+
+
     // Tags admin
     Route::get('tags', 'TagController@index');
     Route::post('tags', 'TagController@store');
@@ -107,6 +113,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('orders', 'OrderController@index');
     Route::post('orders', 'OrderController@store');
+    Route::get('orders/verify', 'OrderController@verifyPay');
     Route::get('orders/{id}', 'OrderController@show');
 
     //review product

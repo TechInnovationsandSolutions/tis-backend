@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\Http\Resources\Order as OrderResource;
+use App\Http\Resources\OrderPayment as ResourcesOrderPayment;
 use App\Order;
 use App\OrderItem;
 use App\OrderPayment;
@@ -258,7 +259,7 @@ class OrderController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'code' => 200,
-                    'message' => 'User\'s Order',
+                    'message' => 'Transaction was successful',
                     // 'data' => $cart,
                     'data' => new OrderResource($pay->order),
                 ], 200);
@@ -281,4 +282,38 @@ class OrderController extends Controller
             die("Something went wrong while executing curl. Uncomment the var_dump line above this line to see what the issue is. Please check your CURL command to make sure everything is ok");
         }
     }
+
+    public function payments(Request $request)
+    {
+        if($request->paid == 1){
+            $payments = OrderPayment::where('paid', true)->get();
+            $msg = 'Settled Order Payment Records';
+        }elseif($request->paid == 0){
+            $payments = OrderPayment::where('paid', false)->get();
+            $msg = 'Pending Order Payment Records';
+        }else{
+            $payments = OrderPayment::all();
+            $msg = 'All Order Payment Records';
+        }
+        return response()->json([
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => $msg,
+                    // 'data' => $cart,
+                    'data' => ResourcesOrderPayment::collection($payments),
+                ], 200);
+    }
+
+    public function payment(OrderPayment $id)
+    {
+        return response()->json([
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Payment Details',
+                    // 'data' => $cart,
+                    'data' => new ResourcesOrderPayment($id),
+                ], 200);
+    }
+
+
 }
