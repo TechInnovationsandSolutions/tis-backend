@@ -283,14 +283,24 @@ class OrderController extends Controller
         }
     }
 
-    public function payments()
+    public function payments(Request $request)
     {
+        if($request->paid == 1){
+            $payments = OrderPayment::where('paid', true)->get();
+            $msg = 'Settled Order Payment Records';
+        }elseif($request->paid == 0){
+            $payments = OrderPayment::where('paid', false)->get();
+            $msg = 'Pending Order Payment Records';
+        }else{
+            $payments = OrderPayment::all();
+            $msg = 'All Order Payment Records';
+        }
         return response()->json([
                     'status' => 'success',
                     'code' => 200,
-                    'message' => 'All Order Payment Records',
+                    'message' => $msg,
                     // 'data' => $cart,
-                    'data' => ResourcesOrderPayment::collection(OrderPayment::all()),
+                    'data' => ResourcesOrderPayment::collection($payments),
                 ], 200);
     }
 
