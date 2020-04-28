@@ -224,6 +224,19 @@ class OrderController extends Controller
     {
             $result = array();
             $sk = env('PS_KEY', 'sk_test_ab2e717da001e28d0138f84822fbff6249b33ab3');
+
+        $pay = OrderPayment::with('order')->where('reference', $request->reference)->first();
+
+        if(!$pay){
+            return response()->json([
+                    'status' => 'error',
+                    'code' => 404,
+                    'message' => 'Payment record not found',
+                    // 'data' => $cart,
+                    //'data' => new OrderResource($pay->order),
+                ], 404);
+        }
+
         //The parameter after verify/ is the transaction reference to be verified
         $url = 'https://api.paystack.co/transaction/verify/'.$request->reference;
 
@@ -244,7 +257,7 @@ class OrderController extends Controller
             if($result['data']){
                 //something came in
                 if($result['data']['status'] == 'success'){
-                    $pay = OrderPayment::where('reference', $request->reference)->first()->update(['status' => true]);
+                    $pay->update(['status' => true]);
 
                 // the transaction was successful, you can deliver value
                 /* 
