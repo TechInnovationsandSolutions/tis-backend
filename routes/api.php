@@ -107,6 +107,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('orders', 'OrderController@index');
     Route::post('orders', 'OrderController@store');
+    Route::get('orders/verify', 'OrderController@verifyPay');
     Route::get('orders/{id}', 'OrderController@show');
 
     //review product
