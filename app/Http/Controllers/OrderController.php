@@ -244,7 +244,7 @@ class OrderController extends Controller
             if($result['data']){
                 //something came in
                 if($result['data']['status'] == 'success'){
-                    $pay = OrderPayment::where('reference', $request->reference)->first()->update(['paid' => true]);
+                    $pay = OrderPayment::where('reference', $request->reference)->first()->update(['status' => true]);
 
                 // the transaction was successful, you can deliver value
                 /* 
@@ -286,10 +286,10 @@ class OrderController extends Controller
     public function payments(Request $request)
     {
         if($request->paid == 1){
-            $payments = OrderPayment::where('paid', true)->get();
+            $payments = OrderPayment::where('status', true)->get();
             $msg = 'Settled Order Payment Records';
         }elseif($request->paid == 0){
-            $payments = OrderPayment::where('paid', false)->get();
+            $payments = OrderPayment::where('status', false)->get();
             $msg = 'Pending Order Payment Records';
         }else{
             $payments = OrderPayment::all();
