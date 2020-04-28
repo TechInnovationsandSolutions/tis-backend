@@ -234,11 +234,11 @@ class OrderController extends Controller
         $ch, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer '.$sk]
         );
-        $request = curl_exec($ch);
+        $curl_request = curl_exec($ch);
         curl_close($ch);
 
-        if ($request) {
-            $result = json_decode($request, true);
+        if ($curl_request) {
+            $result = json_decode($curl_request, true);
             // print_r($result);
             if($result){
             if($result['data']){
