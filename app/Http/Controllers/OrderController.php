@@ -185,7 +185,7 @@ class OrderController extends Controller
         $timesammp=DATE("dmyHis");
         $sk = env('PS_KEY', 'sk_test_ab2e717da001e28d0138f84822fbff6249b33ab3');
         //Set other parameters as keys in the $postdata array
-        $postdata =  array('email' => $order->user->email, 'amount' => $order->amount,"reference" => $timesammp);
+        $postdata =  array('email' => $order->user->email, 'amount' => $order->amount*100,"reference" => $timesammp);
         $url = "https://api.paystack.co/transaction/initialize";
 
         $ch = curl_init();
