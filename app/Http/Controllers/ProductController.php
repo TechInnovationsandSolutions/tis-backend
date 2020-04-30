@@ -128,7 +128,7 @@ class ProductController extends Controller
 
     public function canReview(Product $product)
     {
-        $orders = auth()->user()->orders->where('products', 'LIKE', '"id:"'.$product->id);
+        $orders = auth()->user()->orders->items->where('product_id', $product->id);
 
         if(count($orders)){
                 return response()->json([

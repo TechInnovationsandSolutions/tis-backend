@@ -24,17 +24,25 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-
-        $cart = auth()->user()->cart()->create($request->validate([
+        $request->validate([
             'product_id' => 'required',
             'amount' => 'required',
             'quantity' => 'required'
-        ]));
+        ]);
+        $cart = auth()->user()->cart()->updateOrCreate(
+            [
+                'product_id' => $request->product_id
+            ],
+            [
+                'amount' => $request->amount,
+                'quantity' => $request->quantity,
+            ]
+        );
 
         return response()->json([
             'status' => 'success',
             'code' => 201,
-            'message' => 'Category created',
+            'message' => 'Item added to cart',
             // 'data' => $cart,
             'data' => new ResourcesCart($cart),
         ], 201);
