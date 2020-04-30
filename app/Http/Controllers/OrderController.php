@@ -42,10 +42,23 @@ class OrderController extends Controller
     {
 
         $request->validate([
-            'address_id' => 'required'
+            'address_id' => 'required',
+            'cart' => 'required'
         ]);
 
-        $cart = auth()->user()->cart;
+        foreach($request->cart as $item){
+            auth()->user()->cart()->updateOrCreate(
+                [
+                    'product_id' => $item['product_id']
+                ],
+                [
+                    'amount' => $item['amount'],
+                    'quantity' => $item['quantity'],
+                ]
+            );
+        }
+
+        $cart = auth()->user()->cart->where('quantity', '>', 0);
 
         $order = 0;
 
@@ -105,47 +118,74 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $id)
     {
-        // dd($request->all());
         $request->validate([
-            'address_id' => 'required'
+            'address_id' => 'required',
+            'cart' => 'required'
         ]);
 
-        $cart = auth()->user()->cart;
+        foreach($request->cart as $item){
+            auth()->user()->cart()->updateOrCreate(
+                [
+                    'product_id' => $item['product_id']
+                ],
+                [
+                    'amount' => $item['amount'],
+                    'quantity' => $item['quantity'],
+                ]
+            );
+        }
+
+        $cart = auth()->user()->cart->where('quantity', '>', 0);
 
         $order = 0;
 
-        dd($id->products);
-        if (count($cart)) {
+         if (count($cart)) {
 
             $amount = 0;
             foreach ($cart as $item) {
                 $amount += $item->quantity * $item->amount;
-                $products[] = ['id' => $item->product_id, 'amount' => $item->amount, 'quantity' => $item->quantity];
+                //$products[] = ['id' => $item->product_id, 'amount' => $item->amount, 'quantity' => $item->quantity];
             }
 
             //dd($products);
 
-            $amount = $id->amount + $amount;
-            $sum = $products + $id->products;
-
             $id->update(
                 [
-                    'products' => json_encode($sum),
+                    'products' => 'none',
                     'address_id' => $request->address_id,
-                    'amount' => $amount,
+                    'amount' => $amount+$id->amount,
                     'quantity' => 0,
                     'status' => 0,
                 ]
             );
 
+             foreach ($cart as $item) {
+                OrderItem::updateOrCreate(
+                    [
+                        'order_id' => $id->id,
+                        'product_id' => $item->product_id,
+                    ],
+                    [
+                        'price' => $item->amount,
+                        'quantity' => $item->quantity,
+                ]);
+            }
+
+            $pay = $this->initPay($id);
+
+
+
             Cart::whereIn('id', $cart->pluck('id'))->delete();
         }
+
+        //dd($id->products);
+        
 
         return response()->json([
             'status' => 'success',
             'code' => 201,
             'message' => 'Order updated',
-            'data' => new OrderResource($id),
+            'data' => $pay ? $pay : 'Order update failed',
         ], 201);
     }
 
@@ -155,7 +195,7 @@ class OrderController extends Controller
         if ($order) {
             $order->delete();
         } else {
-            return response()->json(['error' => 'Category not found']);
+            return response()->json(['error' => 'Order not found']);
         }
 
         return response()->json([
