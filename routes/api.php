@@ -21,6 +21,12 @@ Route::middleware('auth:api')->get('/user', function () {
 Route::post('forgot/password', 'Auth\ForgotPasswordController')->name('password.reset');
 Route::get('forgot/password-token', 'AuthController@passwordReset');
 Route::post('forgot/password-change', 'AuthController@passwordChange');
+Route::get('contact', 'ContactController@index');
+Route::post('contact', 'ContactController@send');
+Route::post('subscribe', 'NewsLetterController@subscribe');
+
+
+
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
