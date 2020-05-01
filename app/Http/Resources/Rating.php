@@ -17,7 +17,8 @@ class Rating extends JsonResource
         return [
             'name' => $this->name,
             'rating' => $this->rate,
-            'comment' => $this->comment
+            'comment' => $this->comment,
+            'created_at' => $this->created_at,
         ];
     }
 }

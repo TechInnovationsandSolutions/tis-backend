@@ -32,7 +32,7 @@ class ContactMessage extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database'];
+        return ['mail'];
     }
 
     /**
@@ -45,7 +45,9 @@ class ContactMessage extends Notification
     {
         return (new MailMessage)
                     ->subject($this->message->subject)
-                    ->line($this->message->body);
+                    ->greeting('Email: '.$this->message->email)
+                    ->line($this->message->body)
+                    ->line('Name '.$this->message->name);
     }
 
     /**
