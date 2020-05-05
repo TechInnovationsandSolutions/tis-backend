@@ -36,11 +36,14 @@ class RatingController extends Controller
 
     public function store(Request $request, Product $product)
     {
-        $ratings = $product->ratings()->create($request->validate([
+        $request->validate([
             'name' => 'required',
             'rate' => 'required',
             'comment' => 'required',
-        ]));
+        ]);
+
+        $request->merge(['user_id' => auth()->id()]);
+        $ratings = $product->ratings()->create($request->all());
 
         return response()->json([
             'status' => 'success',
@@ -63,11 +66,15 @@ class RatingController extends Controller
 
     public function update(Request $request, Rating $id)
     {
-        $id->update($request->validate([
+        $request->validate([
             'name' => 'required',
             'rate' => 'required',
             'comment' => 'required',
-        ]));
+        ]);
+        $request->merge(['user_id' => auth()->id()]);
+        $id->update($request->all());
+
+
         return response()->json([
             'status' => 'success',
             'code' => 201,
