@@ -16,6 +16,7 @@ class Cart extends JsonResource
     {
         return [
             'id' => $this->id,
+            'product_id' => $this->product_id,
             'product' => $this->product->name,
             'images' => ProductImage::collection($this->product->images),
             'amount' => $this->amount,

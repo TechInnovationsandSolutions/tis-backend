@@ -49,7 +49,7 @@ class OrderController extends Controller
         foreach($request->cart as $item){
             auth()->user()->cart()->updateOrCreate(
                 [
-                    'id' => $item['id']
+                    'product_id' => $item['product_id']
                 ],
                 [
                     'amount' => $item['amount'],
