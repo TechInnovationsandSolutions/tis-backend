@@ -129,7 +129,7 @@ class ProductController extends Controller
 
     public function canReview(Product $product)
     {
-        $orders = 0;
+        $orders = array();
         $all_orders = Order::with('items')->where('user_id', auth()->id())->get();
 
         if(count($all_orders))
