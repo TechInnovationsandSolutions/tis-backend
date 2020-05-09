@@ -29,7 +29,7 @@ class Order extends Model
 
     public function payment()
     {
-        return $this->belongsTo(OrderPayment::class);
+        return $this->hasOne(OrderPayment::class);
     }
 
     public function items()
