@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product as ResourcesProduct;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\Tag;
+use App\Order;
 use App\Product;
 use App\Services\FileUploadService;
 use App\Tag as AppTag;
@@ -128,7 +129,11 @@ class ProductController extends Controller
 
     public function canReview(Product $product)
     {
-        $orders = auth()->user()->orders()->items->where('product_id', $product->id);
+        $orders = 0;
+        $all_orders = Order::with('items')->where('user_id', auth()->id())->get();
+
+        if(count($all_orders))
+            $orders = $all_orders->items->where('product_id', $product->id);
 
         if(count($orders)){
                 return response()->json([
