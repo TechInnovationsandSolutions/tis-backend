@@ -206,9 +206,9 @@ class OrderController extends Controller
         ], 200);
     }
 
-    public function userOrders(User $user)
+    public function userOrders(User $id)
     {
-        $cart = $user->orders;
+        $cart = $id->orders;
         //return ResourcesProduct::collection(Product::with('category')->paginate(10));
         return response()->json([
             'status' => 'success',
