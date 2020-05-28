@@ -123,7 +123,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('orders/{id}', 'OrderController@show');
 
     //review product
-    Route::get('products-review/{product}/', 'ProductController@canReview');
+
+    Route::get('products-review/{product}', 'ProductController@canReview');
+
 });
 
 // Route::get('/address-all', 'OrderAddressController@all');
