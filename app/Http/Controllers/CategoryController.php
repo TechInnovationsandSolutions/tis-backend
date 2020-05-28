@@ -61,7 +61,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'picture' => 'nullable|image'
+            'picture' => 'nullable'
         ]);
 
 
@@ -69,7 +69,7 @@ class CategoryController extends Controller
 
              $request->merge(['image' => $request->picture['url'], 'thumbnail' => $request->picture['thumbnail']]);
         }
-        $id->update($request->except(['picture']));
+        $id->update($request->except('picture'));
         return response()->json([
             'status' => 'success',
             'code' => 201,

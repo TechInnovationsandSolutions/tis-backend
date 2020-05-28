@@ -69,7 +69,7 @@ class ProductController extends Controller
 
     public function update(Product $product, ProductRequest $request)
     {
-        $product->update($request->except('image'));
+        $product->update($request->except(['image']));
 
         if ($request->has('image')) {
             $product->images()->update($request->image);
@@ -129,13 +129,13 @@ class ProductController extends Controller
 
     public function canReview(Product $product)
     {
-        $orders = 0;
+        $orders = array();
         $all_orders = Order::with('items')->where('user_id', auth()->id())->get();
 
         if(count($all_orders))
             $orders = $all_orders->items->where('product_id', $product->id);
 
-        if(count($orders)){
+        if(count($orders) > 0){
                 return response()->json([
                 'status' => 'success',
                 'code' => 200,
