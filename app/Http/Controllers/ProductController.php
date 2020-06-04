@@ -69,11 +69,13 @@ class ProductController extends Controller
 
     public function update(Product $product, ProductRequest $request)
     {
-        $product->update($request->except(['image']));
+        
 
         if ($request->has('image')) {
             $product->images()->update($request->image);
         }
+
+        $product->update($request->except(['image']));
 
         return response()->json([
             'status' => 'success',

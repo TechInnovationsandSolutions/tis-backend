@@ -8,6 +8,7 @@ use App\Http\Resources\OrderPayment as ResourcesOrderPayment;
 use App\Order;
 use App\OrderItem;
 use App\OrderPayment;
+use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -88,6 +89,10 @@ class OrderController extends Controller
                     'product_id' => $item->product_id,
                     'price' => $item->amount,
                     'quantity' => $item->quantity,
+                ]);
+                $prod = Product::find($item->product_id);
+                $prod->update([
+                    'quantity' => $prod->quantity - $item->quantity
                 ]);
             }
 
