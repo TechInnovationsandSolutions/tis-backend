@@ -20,7 +20,8 @@ class OrderItem extends JsonResource
             'product_id' => $this->product->id,
             'images' => ProductImage::collection($this->product->images),
             'amount' => $this->price,
-            'quantity' => $this->quantity
+            'quantity' => $this->quantity,
+            'deleted_at' => $this->product->deleted_at
 
         ];
     }
