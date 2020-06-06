@@ -21,6 +21,7 @@ class Product extends JsonResource
             'category' => new Category($this->category),
             'description' => $this->description,
             'excerpt' => $this->excerpts,
+            'quantity' => $this->quantity,
             'cost' => $this->cost,
             'reduced_cost' => ($this->cost) - ($this->discount / 100 * $this->cost),
             'discount' => $this->discount . '%',
