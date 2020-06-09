@@ -54,6 +54,11 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]));
 
+         $success = $user->createToken('Personal Access Token')->accessToken;
+
+            $user['token'] = $success;
+
+
         return response()->json([
             'status' => 'success',
             'code' => 201,
