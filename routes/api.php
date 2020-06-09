@@ -34,7 +34,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('update', 'AuthController@update');
         Route::get('show', 'AuthController@show');
-         Route::post('update-password', 'UserController@changePassword');
+        Route::get('logout', 'AuthController@logout');
+        Route::post('update-password', 'UserController@changePassword');
         
     });
 });
