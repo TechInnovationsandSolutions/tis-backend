@@ -57,4 +57,11 @@ class User extends Authenticatable
     {
         $this->notify(new MailResetPasswordNotification($token, $this->email));   
     }
+
+    public function setPasswordAttribute($value)
+        {
+            if($value != ""){
+                $this->attributes['password'] = bcrypt($value);
+            }
+        }
 }
