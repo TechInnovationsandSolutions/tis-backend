@@ -19,7 +19,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
-            $user = $request->user();
+            $user = Auth::user();
             $success = $user->createToken('Personal Access Token')->accessToken;
 
             $user['token'] = $success;
