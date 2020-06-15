@@ -253,7 +253,7 @@ class OrderController extends Controller
         if ($request) {
             $result = json_decode($request, true);
             
-            return response()->json($sk);
+            //return response()->json($sk);
 
             OrderPayment::create([
                 'order_id' => $order->id,
