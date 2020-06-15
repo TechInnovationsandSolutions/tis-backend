@@ -228,7 +228,7 @@ class OrderController extends Controller
     {
         $result = array();
         $timesammp=DATE("dmyHis");
-        $sk = env('PS_KEY', '');
+        $sk = config('app.ps_key');
         //Set other parameters as keys in the $postdata array
         $postdata =  array('email' => $order->user->email, 'amount' => $order->amount*100,"reference" => $timesammp);
         $url = "https://api.paystack.co/transaction/initialize";
@@ -270,7 +270,7 @@ class OrderController extends Controller
     public function verifyPay(Request $request)
     {
             $result = array();
-            $sk = env('PS_KEY', '');
+            $sk = config('app.ps_key');
 
         $pay = OrderPayment::with('order')->where('reference', $request->reference)->first();
 
