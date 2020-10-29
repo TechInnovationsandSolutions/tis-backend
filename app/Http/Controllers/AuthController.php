@@ -130,7 +130,7 @@ class AuthController extends Controller
     {   
         if($user = User::find($request->user_id)){
             $user->update([
-                'password' => bcrypt($request->password)
+                'password' => $request->password
             ]);
 
             return response()->json([

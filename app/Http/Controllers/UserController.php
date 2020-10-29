@@ -92,7 +92,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail(auth()->user()->id);
         if(Hash::check($request->old_password, $user->password)){
-                $user->update(['password' => bcrypt($request->password)]);
+                $user->update(['password' => $request->password]);
 
             return response()->json([
                 'status' => 'success',
