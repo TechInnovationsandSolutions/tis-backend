@@ -95,6 +95,14 @@ class OrderController extends Controller
                     'quantity' => $prod->quantity - $item->quantity
                 ]);
             }
+            
+             return response()->json([
+            'status' => 'success',
+            'code' => 201,
+            'message' => $order ? 'Order created' : 'No order',
+            // 'data' => $cart,
+            'data' => 'got here',
+        ], 201);
 
             dd($order);
             
