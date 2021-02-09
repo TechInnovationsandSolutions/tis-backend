@@ -96,17 +96,7 @@ class OrderController extends Controller
                 ]);
             }
             
-             return response()->json([
-            'status' => 'success',
-            'code' => 201,
-            'message' => $order ? 'Order created' : 'No order',
-            // 'data' => $cart,
-            'data' => 'got here',
-        ], 201);
-
-            dd($order);
-            
-            $pay = $this->initPay($order);
+           $pay = $this->initPay($order);
 
 
 
