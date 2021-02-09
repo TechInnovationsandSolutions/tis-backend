@@ -96,6 +96,8 @@ class OrderController extends Controller
                 ]);
             }
 
+            dd($order);
+            
             $pay = $this->initPay($order);
 
 
