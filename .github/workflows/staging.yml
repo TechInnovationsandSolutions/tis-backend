@@ -6,15 +6,6 @@ on:
       - staging
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v2.3.4
-
-      # - name: run tests
-      #   run: composer run-script test
-
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer self-update --2.2
+          composer update
           composer install --prefer-dist --no-progress
 
       - name: ssh and deploy app
