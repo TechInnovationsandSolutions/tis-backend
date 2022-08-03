@@ -41,6 +41,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer self-update --2.2
           composer install --prefer-dist --no-progress
 
       - name: ssh and deploy app
