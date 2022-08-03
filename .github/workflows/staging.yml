@@ -18,7 +18,7 @@ jobs:
 
       - name: Validate composer.json and composer.lock
         run: |
-          composer self-update --2.2"
+          composer self-update --2.2
           composer validate --strict
 
       - name: Cache Composer packages
