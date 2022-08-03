@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-        with:
-          php-version: '7.1'
+      # - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      #   with:
+      #     php-version: "7.1"
 
       - name: checkout code
         uses: actions/checkout@v2.3.4
@@ -36,13 +36,17 @@ jobs:
       # - name: run tests
       #   run: composer run-script test
 
-      - name: Upload Files
-        id: upload
-        uses: Creepios/sftp-action@v1.0.3
+      - name: ssh and deploy app
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SFTP_HOST_STAGING }}
           port: ${{ secrets.SFTP_PORT }}
           username: ${{ secrets.SFTP_USER }}
-          privateKey: ${{ secrets.SFTP_KEY }}
-          localPath: .
-          remotePath: "/var/www/staging/"
+          key: ${{ secrets.SFTP_KEY }}
+          script: |
+            cd /var/www/staging
+            git pull origin staging
+            composer install
+            php artisan migrate --force
+            php artisan config:clear
+            php artisan cache:clear
