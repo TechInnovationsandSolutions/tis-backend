@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # composer update
+          composer update
           composer install --prefer-dist --no-progress
 
       # - name: run tests
