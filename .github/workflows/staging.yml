@@ -44,7 +44,7 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           ssh_private_key: ${{ secrets.SFTP_KEY }}
           local_path: "./*"
-          remote_path: "/var/www/staging/"
+          remote_path: "/staging/"
           sftpArgs: '-o ConnectTimeout=5'
 
       - name: ssh and deploy app
@@ -55,6 +55,7 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           key: ${{ secrets.SFTP_KEY }}
           script: |
+            sudo mv staging /var/www/staging
             cd /var/www/staging
             chmod 111 deploy.sh
             ./deploy.sh"
