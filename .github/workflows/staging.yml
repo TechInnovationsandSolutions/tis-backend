@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           key: ${{ secrets.SFTP_KEY }}
           script: |
-            sudo mv staging /var/www/staging
+            sudo mv staging /var/www/
             cd /var/www/staging
             chmod 111 deploy.sh
             ./deploy.sh"
