@@ -38,13 +38,14 @@ jobs:
 
       - name: copy files to server
         id: upload
-        uses: Creepios/sftp-action@v1.0.3
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          host: ${{ secrets.SFTP_HOST_STAGING }}
+          server: ${{ secrets.SFTP_HOST_STAGING }}
           username: ${{ secrets.SFTP_USER }}
-          privateKey: ${{ secrets.SFTP_KEY }}
-          localPath: "."
-          remotePath: "/var/www/staging/"
+          ssh_private_key: ${{ secrets.SFTP_KEY }}
+          local_path: "./*"
+          remote_path: "/var/www/staging/"
+          sftpArgs: '-o ConnectTimeout=5'
 
       - name: ssh and deploy app
         uses: appleboy/ssh-action@master
