@@ -44,7 +44,7 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           ssh_private_key: ${{ secrets.SFTP_KEY }}
           local_path: "./*"
-          remote_path: "/staging/"
+          remote_path: "~/staging/"
           sftpArgs: '-o ConnectTimeout=5'
 
       - name: ssh and deploy app
