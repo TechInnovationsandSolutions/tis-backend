@@ -41,7 +41,6 @@ jobs:
         uses: Creepios/sftp-action@v1.0.3
         with:
           host: ${{ secrets.SFTP_HOST_STAGING }}
-          port: ${{ secrets.SFTP_PORT }}
           username: ${{ secrets.SFTP_USER }}
           privateKey: ${{ secrets.SFTP_KEY }}
           localPath: "."
